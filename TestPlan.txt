@@ -1,0 +1,22 @@
+1. Research DHL site: https://www.dhl.com/se-en/home/freight/tools/european-road-freight-transit-time-calculator.html
+- all controls for calculation
+- possible cases: positive, negative, edge, etc.
+2. Implement demo - the first automation with core framework Java+TestNG+Selenium
+3. Prepare all scenarios for automation: TODO in progress
+- random/datadriver data for directions, postcode?
+- get list of correct/not correct postcodes.
+4. TODO screenshots
+5. TODO Show table verification as table
+6. TODO prepare TestNG suite to run
+
+Scenarios:
+1. with diff directions from SE: Se->CZ: TODO need one more
+2. with SE and diff postcode: Done
+3. with SE and the same postcode: Done
+4. with diff directions to SE: CZ->SE: TOD need one more
+5. with incorrect postcode (numbers, letters, etc.) and diff/the same directions -> warn message TODO BUG!? for postcode="+" / "-" : TODO check more symbols, spaces, etc.
+6. with empty postcode(s) -> warn message: Done
+7. use postcode with spaces: TODO see 5.
+8. Calculate -> get result -> edit previous step: TODO
+
+It took about 1.5 day.
