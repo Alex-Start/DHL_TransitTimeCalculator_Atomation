@@ -1,37 +1,53 @@
-package pages.home.freight.tools;
+package verifier;
 
-import verifier.IVerifier;
+import org.testng.Assert;
+import pages.home.freight.tools.EuropeanRoadFreightTransitTimeCalculator;
+import utils.Report;
 
 import static verifier.StringVerifier.asString;
 
 public class CalculatorVerifier {
+    private final Report logger = Report.getLogger(CalculatorVerifier.class);
+
     private final EuropeanRoadFreightTransitTimeCalculator calculator;
 
     public CalculatorVerifier(EuropeanRoadFreightTransitTimeCalculator calculator) {
         this.calculator = calculator;
     }
 
-    public boolean verifyOriginalPostcodeError(String expected) {
-        return asString(expected).verify(calculator.getOriginPostcodeError());
+    public CalculatorVerifier verifyOriginalPostcodeError(String expected) {
+        return verifyOriginalPostcodeError(asString(expected));
     }
 
-    public boolean verifyOriginalPostcodeError(IVerifier expected) {
-        return expected.verify(calculator.getOriginPostcodeError());
+    public CalculatorVerifier verifyOriginalPostcodeError(IVerifier expected) {
+        String actual = calculator.getOriginPostcodeError();
+        boolean result = expected.verify(actual);
+        logger.info("verifyOriginalPostcodeError: Expected: {}, Actual: {}", expected, actual);
+        Assert.assertTrue(result, "Expected error message not matched!");
+        return this;
     }
 
-    public boolean verifyDestinationPostcodeError(String expected) {
-        return asString(expected).verify(calculator.getDestinationPostcodeError());
+    public CalculatorVerifier verifyDestinationPostcodeError(String expected) {
+        return verifyDestinationPostcodeError(asString(expected));
     }
 
-    public boolean verifyDestinationPostcodeError(IVerifier expected) {
-        return expected.verify(calculator.getDestinationPostcodeError());
+    public CalculatorVerifier verifyDestinationPostcodeError(IVerifier expected) {
+        String actual = calculator.getDestinationPostcodeError();
+        boolean result = expected.verify(actual);
+        logger.info("verifyDestinationPostcodeError: Expected: {}, Actual: {}", expected, actual);
+        Assert.assertTrue(result, "Expected error message not matched!");
+        return this;
     }
 
-    public boolean verifyGeneralError(String expected) {
-        return asString(expected).verify(calculator.getGeneralErrorMessage());
+    public CalculatorVerifier verifyGeneralError(String expected) {
+        return verifyGeneralError(asString(expected));
     }
 
-    public boolean verifyGeneralError(IVerifier expected) {
-        return expected.verify(calculator.getGeneralErrorMessage());
+    public CalculatorVerifier verifyGeneralError(IVerifier expected) {
+        String actual = calculator.getGeneralErrorMessage();
+        boolean result = expected.verify(actual);
+        logger.info("verifyGeneralError: Expected: {}, Actual: {}", expected, actual);
+        Assert.assertTrue(result, "Expected error message not matched!");
+        return this;
     }
 }
