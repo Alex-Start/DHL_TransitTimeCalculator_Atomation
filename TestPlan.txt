@@ -14,9 +14,9 @@ Scenarios:
 2. with SE and diff postcode: Done
 3. with SE and the same postcode: Done
 4. with diff directions to SE: CZ->SE: TOD need one more
-5. with incorrect postcode (numbers, letters, etc.) and diff/the same directions -> warn message TODO BUG!? for postcode="+" / "-" : TODO check more symbols, spaces, etc.
+5. with incorrect postcode (numbers, letters, etc.) and diff/the same directions -> warn message TODO BUG!? for postcode="+" : TODO check more symbols, spaces, etc.
 6. with empty postcode(s) -> warn message: Done
 7. use postcode with spaces: TODO see 5.
 8. Calculate -> get result -> edit previous step: TODO
 
-It took about 1.5 day.
+It took about 2 days.

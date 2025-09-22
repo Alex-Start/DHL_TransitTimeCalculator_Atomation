@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="TransitTimeCalculator Test" parallel="false">
+
+    <test name="TransitTimeCalculatorTest">
+        <classes>
+            <class name="home.freight.tools.TransitTimeCalculatorTest"/>
+            <class name="home.freight.tools.TransitTimeCalculatorIncorrectPostcodeTest"/>
+            <class name="home.freight.tools.TransitTimeCalculatorIncorrectDataTest"/>
+        </classes>
+    </test>
+
+</suite>
