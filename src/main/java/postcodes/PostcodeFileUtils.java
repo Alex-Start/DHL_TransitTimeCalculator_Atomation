@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,10 +32,15 @@ public class PostcodeFileUtils {
     // Save list of postcodes to file
     public static void savePostcodesToFile(List<String> postcodes, String filePath) {
         try {
-            Files.write(Path.of(filePath), postcodes);
-            System.out.println("Postcodes saved to: " + filePath);
+            Files.write(
+                    Path.of(filePath),
+                    postcodes,
+                    StandardOpenOption.CREATE,   // create file if not exists
+                    StandardOpenOption.APPEND    // append instead of overwrite
+            );
+            System.out.println("Postcodes appended to: " + filePath);
         } catch (IOException e) {
-            System.err.println("Error saving postcodes: " + e.getMessage());
+            System.err.println("Error writing postcodes: " + e.getMessage());
         }
     }
 

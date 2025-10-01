@@ -11,10 +11,12 @@ import utils.Report;
 import java.time.Duration;
 
 public class EuropeanRoadFreightTransitTimeCalculator extends BasePages {
+    public static final String NBSP = "\u00A0";
     private final Report logger = Report.getLogger(EuropeanRoadFreightTransitTimeCalculator.class);
 
     // time out duration for getting any element
-    private final Duration timeOutDuration = Duration.ofSeconds(10);
+    private static final Duration TIMEOUT_DURATION_DEFAULT = Duration.ofSeconds(10);
+    private Duration timeOutDuration;
 
     private final By rootNode = By.cssSelector("div.l-grid.c-calculator.c-leadtime.js--swe-leadtime.component-wide.component-margin");
     private WebElement root;
@@ -39,7 +41,12 @@ public class EuropeanRoadFreightTransitTimeCalculator extends BasePages {
     public static final String ERROR_MESSAGE_CORRECT_POSTAL_CODE = "Correct postal code (e.g. no post box)*";
 
     public EuropeanRoadFreightTransitTimeCalculator(WebDriver driver) {
+        this(driver, TIMEOUT_DURATION_DEFAULT);
+    }
+
+    public EuropeanRoadFreightTransitTimeCalculator(WebDriver driver, Duration timeOutDuration) {
         super(driver);
+        this.timeOutDuration = timeOutDuration;
         //driver.manage().window().maximize();
     }
 
@@ -75,14 +82,14 @@ public class EuropeanRoadFreightTransitTimeCalculator extends BasePages {
 
     // Actions
     public EuropeanRoadFreightTransitTimeCalculator selectOriginCountry(Country countryCode) {
-        logger.info("Select Origin Country: "+ countryCode);
+        logger.info("Select Origin Country: {}", countryCode);
         Select select = new Select(root.findElement(originCountrySelect));
         select.selectByValue(countryCode.getCode());
         return this;
     }
 
     public EuropeanRoadFreightTransitTimeCalculator enterOriginPostcode(String postcode) {
-        logger.info("Select Origin Postcode: "+ postcode);
+        logger.info("Select Origin Postcode: {}", postcode);
         WebElement input = root.findElement(originPostcodeInput);
         input.clear();
         input.sendKeys(postcode);
@@ -90,14 +97,14 @@ public class EuropeanRoadFreightTransitTimeCalculator extends BasePages {
     }
 
     public EuropeanRoadFreightTransitTimeCalculator selectDestinationCountry(Country countryCode) {
-        logger.info("Select Destination Country: "+ countryCode);
+        logger.info("Select Destination Country: {}", countryCode);
         Select select = new Select(root.findElement(destinationCountrySelect));
         select.selectByValue(countryCode.getCode());
         return this;
     }
 
     public EuropeanRoadFreightTransitTimeCalculator enterDestinationPostcode(String postcode) {
-        logger.info("Select Destination Postcode: "+ postcode);
+        logger.info("Select Destination Postcode: {}", postcode);
         WebElement input = root.findElement(destinationPostcodeInput);
         input.clear();
         input.sendKeys(postcode);
@@ -123,15 +130,17 @@ public class EuropeanRoadFreightTransitTimeCalculator extends BasePages {
 
     // Error getters
     public String getOriginPostcodeError() {
-        WebElement errorElement = root.findElement(originPostcodeError);
-        String text = errorElement.getText().trim();
-        return text.isEmpty() || text.equals("\u00A0") ? null : text; // null if empty or &nbsp;
+        return getPostcodeError(originPostcodeError);
     }
 
     public String getDestinationPostcodeError() {
-        WebElement errorElement = root.findElement(destinationPostcodeError);
+        return getPostcodeError(destinationPostcodeError);
+    }
+
+    private String getPostcodeError(By by) {
+        WebElement errorElement = root.findElement(by);
         String text = errorElement.getText().trim();
-        return text.isEmpty() || text.equals("\u00A0") ? null : text;
+        return text.isEmpty() || text.equals(NBSP) ? null : text; // null if empty or &nbsp;
     }
 
     /*
