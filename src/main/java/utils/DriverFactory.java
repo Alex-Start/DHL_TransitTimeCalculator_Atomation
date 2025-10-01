@@ -8,7 +8,7 @@ import java.util.*;
 
 public class DriverFactory {
     private static final ThreadLocal<WebDriver> driverThread = new ThreadLocal<>();
-    private static Report logger = Report.getLogger(DriverFactory.class);
+    private static final Report logger = Report.getLogger(DriverFactory.class);
 
     public static WebDriver getDriver() {
         if (driverThread.get() == null) {
@@ -27,13 +27,14 @@ public class DriverFactory {
             ChromeDriver chromeDriver = new ChromeDriver(options);
 
             driverThread.set(chromeDriver);
+            logger.info("Set WebDriver: "+ chromeDriver.hashCode());
         }
         return driverThread.get();
     }
 
     public static void quitDriver() {
         if (driverThread.get() != null) {
-            logger.info("Quit WebDriver");
+            logger.info("Quit WebDriver: "+ driverThread.get().hashCode());
             driverThread.get().quit();
             driverThread.remove();
         }
